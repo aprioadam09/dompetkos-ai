@@ -1,32 +1,23 @@
-import os
-from dotenv import load_dotenv
-from google import genai
+import json
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.append(str(PROJECT_ROOT))
+
+from src.llm.extractor import extract_transactions
 
 
 def main():
-    load_dotenv()
+    user_input = "Hari ini makan ayam geprek 18 ribu, kopi 12 ribu, dan laundry 25 ribu."
 
-    api_key = os.getenv("GEMINI_API_KEY")
-    model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    result = extract_transactions(user_input)
 
-    if not api_key:
-        raise ValueError("GEMINI_API_KEY belum ditemukan. Cek file .env kamu.")
+    print("Input:")
+    print(user_input)
 
-    client = genai.Client(api_key=api_key)
-
-    prompt = """
-    Kamu adalah sistem test koneksi API.
-    Jawab hanya dengan kalimat berikut, tanpa tambahan lain:
-
-    Gemini API berhasil terhubung.
-    """
-
-    response = client.models.generate_content(
-        model=model_name,
-        contents=prompt
-    )
-
-    print(response.text)
+    print("\nExtraction result:")
+    print(json.dumps(result, indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":
