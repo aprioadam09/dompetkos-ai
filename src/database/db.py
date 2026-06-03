@@ -29,7 +29,7 @@ def init_db():
             amount INTEGER NOT NULL,
             category TEXT NOT NULL,
             type TEXT NOT NULL,
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            created_at TEXT DEFAULT (datetime('now', '+7 hours'))
         )
         """
     )
@@ -40,8 +40,8 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             month TEXT NOT NULL UNIQUE,
             amount INTEGER NOT NULL,
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+            created_at TEXT DEFAULT (datetime('now', '+7 hours')),
+            updated_at TEXT DEFAULT (datetime('now', '+7 hours'))
         )
         """
     )

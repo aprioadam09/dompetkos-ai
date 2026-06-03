@@ -81,7 +81,7 @@ def set_monthly_budget(month: str, amount: int) -> None:
         ON CONFLICT(month)
         DO UPDATE SET
             amount = excluded.amount,
-            updated_at = CURRENT_TIMESTAMP
+            updated_at = datetime('now', '+7 hours')
         """,
         (month, amount),
     )
